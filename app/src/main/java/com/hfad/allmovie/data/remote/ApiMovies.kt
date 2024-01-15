@@ -14,12 +14,12 @@ interface ApiMovies {
         "X-RapidAPI-Key: f3e937b351msh7645c07e5ecaa81p1ec214jsn4eaa57bdb635",
         "X-RapidAPI-Host: moviesverse1.p.rapidapi.com"
     )
-    @GET("/movies/{page}")
+    @GET("movies/{page}")
     suspend fun getAllMovies(@Path("page") page: Int): AllMoviesDto
 
-    @GET("/movie/singleMovie/{movieId}")
+    @GET("movie/singleMovie/{movieId}")
     suspend fun getMovieDetails(@Path("movieId") movieId: String): MovieDetailsDto
 
-    @GET("/movies/movieBySearch/1")
+    @GET("movies/movieBySearch/1")
     suspend fun searchMovieByName(@Query("search") name: String): List<SearchMovieDto>
 }
