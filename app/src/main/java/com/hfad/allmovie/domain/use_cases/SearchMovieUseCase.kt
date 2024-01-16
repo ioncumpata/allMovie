@@ -1,6 +1,5 @@
 package com.hfad.allmovie.domain.use_cases
 
-import com.hfad.allmovie.domain.model.allmovies.AllMovies
 import com.hfad.allmovie.domain.model.search_movie.SearchMovie
 import com.hfad.allmovie.domain.repository.MovieRepository
 import com.hfad.allmovie.util.Resource

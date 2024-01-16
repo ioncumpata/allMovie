@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.hfad.allmovie.presentation.home_screen.HomeScreen
+import com.hfad.allmovie.presentation.home_screen.HomeScreenViewModel
 import com.hfad.allmovie.ui.theme.AllMovieTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+
                     HomeScreen()
                 }
             }

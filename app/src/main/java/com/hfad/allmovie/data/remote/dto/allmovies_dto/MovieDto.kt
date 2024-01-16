@@ -10,13 +10,6 @@ data class MovieDto(
     val text: String
 ){
 
-    fun toMovie(): Movie{
-        return Movie(
-            id = id,
-            img = img,
-            text = text
-        )
-    }
 
     fun toMoviesEntity(): MoviesEntity{
         return MoviesEntity(
