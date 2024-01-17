@@ -1,6 +1,6 @@
 package com.hfad.allmovie.data.remote
 
-import com.hfad.allmovie.data.remote.dto.allmovies_dto.MovieDto
+import com.hfad.allmovie.data.remote.dto.allmovies_dto.AllMovieDto
 import com.hfad.allmovie.data.remote.dto.movie_details_dto.MovieDetailsDto
 import com.hfad.allmovie.data.remote.dto.search_movie_dto.SearchMovieDto
 import retrofit2.http.GET
@@ -15,7 +15,7 @@ interface ApiMovies {
         "X-RapidAPI-Host: moviesverse1.p.rapidapi.com"
     )
     @GET("movies/{page}")
-    suspend fun getAllMovies(@Path("page") page: Int): List<MovieDto>
+    suspend fun getAllMovies(@Path("page") page: Int): AllMovieDto
 
     @GET("movie/singleMovie/{movieId}")
     suspend fun getMovieDetails(@Path("movieId") movieId: String): MovieDetailsDto
