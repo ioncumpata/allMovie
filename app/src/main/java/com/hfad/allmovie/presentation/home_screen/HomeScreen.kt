@@ -5,21 +5,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.LazyPagingItems
-import com.hfad.allmovie.domain.model.allmovies.Movie
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import javax.inject.Inject
 
 @Composable
-fun HomeScreen(
-    state: LazyPagingItems<Movie>
+fun HomeScreen (
+   viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
+
+    val movies = viewModel.moviesPage.value.collectAsLazyPagingItems()
 
     Box(
         modifier = Modifier
@@ -32,7 +33,7 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            items(state) { i ->
+            items(movies) { i ->
                 if (i != null) {
 
                     MovieItem(movie = i)

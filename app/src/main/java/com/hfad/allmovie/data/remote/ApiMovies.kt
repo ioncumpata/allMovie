@@ -15,7 +15,7 @@ interface ApiMovies {
         "X-RapidAPI-Host: moviesverse1.p.rapidapi.com"
     )
     @GET("movies/{page}")
-    suspend fun getAllMovies(@Path("page") page: Int): MovieDto
+    suspend fun getAllMovies(@Path("page") page: Int): List<MovieDto>
 
     @GET("movie/singleMovie/{movieId}")
     suspend fun getMovieDetails(@Path("movieId") movieId: String): MovieDetailsDto

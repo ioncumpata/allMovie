@@ -1,15 +1,13 @@
 package com.hfad.allmovie.di
 
 import android.content.Context
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.hfad.allmovie.data.local.MovieDataBase
-import com.hfad.allmovie.data.local.entities.movies_entity.MoviesEntity
 import com.hfad.allmovie.data.remote.ApiMovies
 import com.hfad.allmovie.data.repository.MovieRepositoryImpl
 import com.hfad.allmovie.domain.repository.MovieRepository
+import com.hfad.allmovie.domain.use_cases.AllMoviesUseCase
+import com.hfad.allmovie.domain.use_cases.UseCases
 import com.hfad.allmovie.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -36,7 +34,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesApiMovies(): ApiMovies{
+    fun providesApiMovies(): ApiMovies {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -46,9 +44,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesMovieRepository(api: ApiMovies, movieDb: MovieDataBase): MovieRepository {
-        return MovieRepositoryImpl(api,movieDb)
+    fun providesMovieRepository(api: ApiMovies): MovieRepository {
+        return MovieRepositoryImpl(api)
     }
 
+    @Provides
+    @Singleton
+    fun providesUseCases(repository: MovieRepository): UseCases {
+        return UseCases(
+            allMoviesUseCase = AllMoviesUseCase(repository)
+        )
 
+
+    }
 }
