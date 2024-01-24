@@ -15,7 +15,9 @@ data class MovieDetailsDto(
 
         return MovieDetails(
             movieInfo = movieInfoDto.map { it.toMovieInfo() },
-            extraInfo = extraInfoDto.map { it.toExtraInfo() }
+            extraInfo = extraInfoDto.map { it.toExtraInfo() },
+            screenShots = screenShots,
+            storyLine = storyLine
         )
     }
 }

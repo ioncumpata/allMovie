@@ -1,5 +1,6 @@
 package com.hfad.allmovie.domain.use_cases
 
+import android.util.Log
 import com.hfad.allmovie.domain.model.search_movie.SearchMovie
 import com.hfad.allmovie.domain.repository.MovieRepository
 import com.hfad.allmovie.util.Resource
@@ -16,7 +17,7 @@ class SearchMovieUseCase  @Inject constructor(
         try {
 
             emit(Resource.Loading())
-            val movie = repository.getMovieByName(name).map { it.toSearchMovie() }
+            val movie = repository.getMovieByName(name).movies.map { it.toSearchMovie() }
             emit(Resource.Success(movie))
 
         }catch (e: HttpException){

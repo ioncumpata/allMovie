@@ -1,23 +1,30 @@
 package com.hfad.allmovie.presentation.home_screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavDestinationDsl
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
-import javax.inject.Inject
+import com.hfad.allmovie.presentation.navigation.bottom_navigation.BottomBarScreen
+import com.hfad.allmovie.presentation.navigation.screens_navigation.ScreenNavigation
 
+@NavDestinationDsl
 @Composable
-fun HomeScreen (
-   viewModel: HomeScreenViewModel = hiltViewModel()
+fun HomeScreen(
+    viewModel: HomeScreenViewModel = hiltViewModel(),
+    navHostController: NavHostController
+
+
+
 ) {
 
     val movies = viewModel.moviesPage.value.collectAsLazyPagingItems()
@@ -27,17 +34,16 @@ fun HomeScreen (
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        LazyColumn(
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            contentPadding = PaddingValues(16.dp)
         ) {
+            items(movies.itemCount) { movieItem ->
 
-            items(movies) { i ->
-                if (i != null) {
+                movies[movieItem]?.let { MovieItem(movie = it, onClick = {movieId ->
+                    navHostController.navigate(route = ScreenNavigation.DetailsScreen.route+ "/$movieId")}) }
 
-                    MovieItem(movie = i)
-                }
             }
         }
     }

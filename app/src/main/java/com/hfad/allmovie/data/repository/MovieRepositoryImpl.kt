@@ -1,13 +1,14 @@
 package com.hfad.allmovie.data.repository
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.hfad.allmovie.data.local.MovieDataBase
 import com.hfad.allmovie.data.paging.MoviesDataSource
 import com.hfad.allmovie.data.remote.ApiMovies
 import com.hfad.allmovie.data.remote.dto.allmovies_dto.MovieDto
 import com.hfad.allmovie.data.remote.dto.movie_details_dto.MovieDetailsDto
+import com.hfad.allmovie.data.remote.dto.search_movie_dto.MainSearchDto
 import com.hfad.allmovie.data.remote.dto.search_movie_dto.SearchMovieDto
 import com.hfad.allmovie.domain.repository.MovieRepository
 import com.hfad.allmovie.util.Constants.ITEMS_PER_PAGE
@@ -31,7 +32,7 @@ class MovieRepositoryImpl @Inject constructor(
         return api.getMovieDetails(movieId)
     }
 
-    override suspend fun getMovieByName(name: String): List<SearchMovieDto> {
+    override suspend fun getMovieByName(name: String): MainSearchDto {
         return api.searchMovieByName(name)
     }
 }

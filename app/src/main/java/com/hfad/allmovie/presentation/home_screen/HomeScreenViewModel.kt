@@ -30,7 +30,6 @@ class HomeScreenViewModel @Inject constructor(
     private fun getMovies() {
         viewModelScope.launch {
             moviesPage.value = useCases.allMoviesUseCase().cachedIn(viewModelScope)
-            Log.d("Prototype", moviesPage.value.toString())
         }
     }
 
