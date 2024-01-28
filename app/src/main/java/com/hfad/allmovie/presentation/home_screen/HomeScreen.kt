@@ -43,9 +43,7 @@ fun HomeScreen(
             items(movies.itemCount) { movieItem ->
 
                 movies[movieItem]?.let {
-                    LaunchedEffect(it.id) {
-                        viewModel.ifExistMovieInWatchList(it.id)
-                    }
+
                     MovieItem(
                         movie = it,
                         viewModel = viewModel,
@@ -53,7 +51,8 @@ fun HomeScreen(
                             navHostController.navigate(route = ScreenNavigation.DetailsScreen.route + "/$movieId")
 
 
-                        }
+                        },
+                        isBookmarked = viewModel.ifExistState.value
                     )
                 }
             }

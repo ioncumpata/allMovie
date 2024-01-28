@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +21,12 @@ import com.hfad.allmovie.domain.model.watch_list.WatchListItem
 
 
 @Composable
-fun MovieItem(movie: Movie, onClick: (String) -> Unit, viewModel: HomeScreenViewModel) {
+fun MovieItem(
+    movie: Movie,
+    onClick: (String) -> Unit,
+    viewModel: HomeScreenViewModel,
+    isBookmarked: Boolean
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,6 +34,7 @@ fun MovieItem(movie: Movie, onClick: (String) -> Unit, viewModel: HomeScreenView
             .height(200.dp)
             .padding(8.dp)
     ) {
+
 
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
@@ -42,7 +49,8 @@ fun MovieItem(movie: Movie, onClick: (String) -> Unit, viewModel: HomeScreenView
                 viewModel = viewModel,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 70.dp)
+                    .padding(horizontal = 70.dp),
+                isBookmarked = isBookmarked
             )
 
 
@@ -55,12 +63,13 @@ fun MovieItem(movie: Movie, onClick: (String) -> Unit, viewModel: HomeScreenView
 fun BookmarkButton(
     modifier: Modifier,
     movie: Movie,
-    viewModel: HomeScreenViewModel
+    viewModel: HomeScreenViewModel,
+    isBookmarked: Boolean
 ) {
 
-    val ifExistInList = viewModel.ifExistState.value
 
-    if (!ifExistInList) {
+
+    if (!isBookmarked) {
 
 
         Image(

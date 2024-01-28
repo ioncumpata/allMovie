@@ -8,6 +8,7 @@ import com.hfad.allmovie.presentation.detailsmovie_screen.DetailsMovieScreen
 import com.hfad.allmovie.presentation.home_screen.HomeScreen
 import com.hfad.allmovie.presentation.navigation.screens_navigation.ScreenNavigation
 import com.hfad.allmovie.presentation.search_screen.SearchScreen
+import com.hfad.allmovie.presentation.watchlist_screen.WatchListScreen
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
@@ -21,6 +22,9 @@ fun BottomNavGraph(navController: NavHostController) {
         }
         composable(route = BottomBarScreen.Search.route) {
             SearchScreen(navHostController = navController)
+        }
+        composable(route = BottomBarScreen.WatchList.route){
+            WatchListScreen()
         }
 
         detailsNavGraph(navController)
