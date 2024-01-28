@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.hfad.allmovie.presentation.navigation.screens_navigation.ScreenNavigation
 import com.hfad.allmovie.presentation.search_screen.components.SearchBar
 import com.hfad.allmovie.presentation.search_screen.components.SearchItem
 import com.hfad.allmovie.ui.theme.PurplyBlue
@@ -20,6 +22,7 @@ import com.hfad.allmovie.ui.theme.PurplyBlue
 @Composable
 fun SearchScreen(
     searchViewModel: SearchViewModel = hiltViewModel(),
+    navHostController: NavHostController
 ) {
 
     val movieList = searchViewModel.state.value.movies
@@ -42,7 +45,8 @@ fun SearchScreen(
 
                 itemsIndexed(items = movieList ?: emptyList()) { index, item ->
 
-                    SearchItem(searchItem = item, onClick = { })
+                    SearchItem(searchItem = item, onClick = { movieId ->
+                        navHostController.navigate(route = ScreenNavigation.DetailsScreen.route+ "/$movieId")})
 
                 }
 

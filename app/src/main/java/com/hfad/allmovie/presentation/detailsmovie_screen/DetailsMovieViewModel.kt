@@ -1,5 +1,6 @@
 package com.hfad.allmovie.presentation.detailsmovie_screen
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsMovieViewModel @Inject constructor(
     private val useCase: UseCases
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = mutableStateOf(DetailsListState())
     val state: State<DetailsListState> = _state
@@ -32,6 +33,7 @@ class DetailsMovieViewModel @Inject constructor(
                 is Resource.Success -> {
 
                     _state.value = DetailsListState(movieDetails = result.data)
+
                 }
                 is Resource.Error -> {
                     _state.value = DetailsListState(
@@ -48,7 +50,6 @@ class DetailsMovieViewModel @Inject constructor(
 
 
     }
-
 
 
 }

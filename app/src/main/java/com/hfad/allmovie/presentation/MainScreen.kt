@@ -42,6 +42,8 @@ fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
+    val bottomBarDestination = screens.any { it.route == currentDestination?.route }
+    if (bottomBarDestination){
     BottomNavigation(
         contentColor = Color.Cyan,
         backgroundColor = Color.Black,
@@ -54,6 +56,7 @@ fun BottomBar(navController: NavHostController) {
 
         }
 
+    }
     }
 
 }

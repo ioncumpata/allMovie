@@ -4,12 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import com.hfad.allmovie.data.local.MovieDataBase
 import com.hfad.allmovie.data.remote.ApiMovies
-import com.hfad.allmovie.data.repository.MovieRepositoryImpl
-import com.hfad.allmovie.domain.repository.MovieRepository
-import com.hfad.allmovie.domain.use_cases.AllMoviesUseCase
-import com.hfad.allmovie.domain.use_cases.MovieDetailsUseCase
-import com.hfad.allmovie.domain.use_cases.SearchMovieUseCase
-import com.hfad.allmovie.domain.use_cases.UseCases
+import com.hfad.allmovie.data.repository.MovieRepositoryLocalImpl
+import com.hfad.allmovie.data.repository.MovieRepositoryRemoteImpl
+import com.hfad.allmovie.domain.repository.MovieRepositoryLocal
+import com.hfad.allmovie.domain.repository.MovieRepositoryRemote
+import com.hfad.allmovie.domain.use_cases.*
 import com.hfad.allmovie.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -25,26 +24,17 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    
 
     @Provides
     @Singleton
-    fun provideMovieDatabase(@ApplicationContext context: Context): MovieDataBase {
-        return Room.databaseBuilder(
-            context,
-            MovieDataBase::class.java,
-            "movies.db"
-        ).build()
-    }
-
-    @Provides
-    @Singleton
-    fun providesHttpInterceptor(): HttpLoggingInterceptor{
+    fun providesHttpInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient{
+    fun providesOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
@@ -63,19 +53,44 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesMovieRepository(api: ApiMovies): MovieRepository {
-        return MovieRepositoryImpl(api)
+    fun providesMovieRepositoryRemote(api: ApiMovies): MovieRepositoryRemote {
+        return MovieRepositoryRemoteImpl(api)
     }
 
     @Provides
     @Singleton
-    fun providesUseCases(repository: MovieRepository): UseCases {
+    fun providesUseCases(
+        repositoryRemote: MovieRepositoryRemote,
+        repositoryLocal: MovieRepositoryLocal
+    ): UseCases {
         return UseCases(
-            allMoviesUseCase = AllMoviesUseCase(repository),
-            searchMovieUseCase = SearchMovieUseCase(repository),
-            movieDetailsUseCase = MovieDetailsUseCase(repository)
+            allMoviesUseCase = AllMoviesUseCase(repositoryRemote),
+            searchMovieUseCase = SearchMovieUseCase(repositoryRemote),
+            movieDetailsUseCase = MovieDetailsUseCase(repositoryRemote),
+            addMovieToWatchList = AddMovieToWatchListUseCase(repositoryLocal),
+            getAllMoviesWatchListUseCase = GetAllMoviesWatchListUseCase(repositoryLocal),
+            deleteMovieFromWatchList = DeleteMovieFromWatchListUseCase(repositoryLocal),
+            ifExistInWatchList = IfExistInWatchListUseCase(repositoryLocal)
         )
 
 
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): MovieDataBase {
+        return Room.databaseBuilder(
+            context,
+            MovieDataBase::class.java,
+            "MOVIE_DATABASE"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieRepositoryLocal(movieDataBase: MovieDataBase): MovieRepositoryLocal {
+        return MovieRepositoryLocalImpl(movieDataBase)
+    }
+
+
 }

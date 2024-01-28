@@ -20,7 +20,7 @@ fun BottomNavGraph(navController: NavHostController) {
             HomeScreen(navHostController = navController)
         }
         composable(route = BottomBarScreen.Search.route) {
-            SearchScreen()
+            SearchScreen(navHostController = navController)
         }
 
         detailsNavGraph(navController)

@@ -9,7 +9,7 @@ data class ExtraInfoDto(
 
     fun toExtraInfo(): ExtraInfo{
         return ExtraInfo(
-            header = header,
+            header = header ,
             para = para
         )
     }
