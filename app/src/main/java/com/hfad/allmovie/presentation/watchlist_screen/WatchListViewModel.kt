@@ -24,7 +24,7 @@ class WatchListViewModel @Inject constructor(
         getMovieFromDb()
     }
 
-   private fun getMovieFromDb() = viewModelScope.launch(Dispatchers.IO) {
+    fun getMovieFromDb() = viewModelScope.launch(Dispatchers.IO) {
 
         delay(500)
 
@@ -45,6 +45,12 @@ class WatchListViewModel @Inject constructor(
 
                 }
             }
+        }
+    }
+
+    fun removeMovieFromWatchList(movieId: String) {
+        viewModelScope.launch {
+            useCases.deleteMovieFromWatchList(movieId)
         }
     }
 }

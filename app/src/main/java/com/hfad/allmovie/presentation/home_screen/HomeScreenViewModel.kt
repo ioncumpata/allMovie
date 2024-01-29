@@ -1,6 +1,7 @@
 package com.hfad.allmovie.presentation.home_screen
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -25,8 +26,8 @@ class HomeScreenViewModel @Inject constructor(
 
     val moviesPage = mutableStateOf<Flow<PagingData<Movie>>>(emptyFlow())
 
-    private val ifExistState_ = mutableStateOf(false)
-    val ifExistState: State<Boolean> = ifExistState_
+    private val bookmarkStateMap = mutableMapOf<String, MutableState<Boolean>>()
+
 
     init {
         getMovies()
@@ -50,10 +51,12 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    fun getBookmarkState(movieId: String): MutableState<Boolean> {
+        return bookmarkStateMap.getOrPut(movieId) { mutableStateOf(false) }
+    }
     fun ifExistMovieInWatchList(movieId: String) {
         viewModelScope.launch {
-            ifExistState_.value = useCases.ifExistInWatchList(movieId)
-            Log.d("IfExist","${ifExistState.value}")
+            getBookmarkState(movieId).value = useCases.ifExistInWatchList(movieId)
         }
     }
 

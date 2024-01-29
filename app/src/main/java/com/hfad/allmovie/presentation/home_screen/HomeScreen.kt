@@ -44,6 +44,8 @@ fun HomeScreen(
 
                 movies[movieItem]?.let {
 
+
+
                     MovieItem(
                         movie = it,
                         viewModel = viewModel,
@@ -51,8 +53,8 @@ fun HomeScreen(
                             navHostController.navigate(route = ScreenNavigation.DetailsScreen.route + "/$movieId")
 
 
-                        },
-                        isBookmarked = viewModel.ifExistState.value
+                        }
+
                     )
                 }
             }

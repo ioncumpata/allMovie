@@ -45,18 +45,3 @@ fun SearchItem(
         }
     }
 
-@Preview(showBackground = true)
-@Composable
-fun SearchItemPreview(
-
-){
-    SearchItem(
-        searchItem = SearchMovie(
-            id = "locoPoc",
-            img = "https://moviesverse.baby/wp-content/uploads/2023/10/Loki-2023.jpg",
-            text = "Loki"
-        )
-    ) {
-
-    }
-}
